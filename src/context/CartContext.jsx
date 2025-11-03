@@ -1,76 +1,56 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
-// Create the context
 const CartContext = createContext();
 
-// Custom hook (for cleaner usage)
-export const useCart = () => useContext(CartContext);
-
-// Provider component
 export const CartProvider = ({ children }) => {
-  // Initialize cart from localStorage
   const [cart, setCart] = useState(() => {
-    const savedCart = localStorage.getItem("cart");
-    return savedCart ? JSON.parse(savedCart) : [];
+    const saved = localStorage.getItem("cart");
+    return saved ? JSON.parse(saved) : [];
   });
 
-  // Save to localStorage when cart changes
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  // Actions
   const addToCart = (product) => {
-    const exists = cart.find((item) => item.id === product.id);
-    if (exists) {
-      setCart(
-        cart.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-        )
-      );
-    } else {
-      setCart([...cart, { ...product, quantity: 1 }]);
-    }
+    setCart((prev) => {
+      const existing = prev.find((item) => item.id === product.id);
+      if (existing) {
+        toast.info("🛒 Quantity updated");
+        return prev.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      toast.success("✅ Added to cart!");
+      return [...prev, { ...product, quantity: 1 }];
+    });
   };
 
-  const removeFromCart = (id) => setCart(cart.filter((item) => item.id !== id));
+  const removeFromCart = (id) => {
+    setCart((prev) => prev.filter((item) => item.id !== id));
+    toast.error("🗑️ Removed from cart");
+  };
 
-  const increaseQty = (id) =>
-    setCart(
-      cart.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
-    );
+  const clearCart = () => {
+    setCart([]);
+    toast.success("🧾 Order completed!");
+  };
 
-  const decreaseQty = (id) =>
-    setCart(
-      cart
-        .map((item) =>
-          item.id === id ? { ...item, quantity: item.quantity - 1 } : item
-        )
-        .filter((item) => item.quantity > 0)
-    );
-
-  const clearCart = () => setCart([]);
-
-  // Derived data
-  const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
-  const totalPrice = cart.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
+  return (
+    <CartContext.Provider
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        clearCart,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
   );
-
-  // Values to share across the app
-  const value = {
-    cart,
-    addToCart,
-    removeFromCart,
-    increaseQty,
-    decreaseQty,
-    clearCart,
-    cartCount,
-    totalPrice,
-  };
-
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
+
+export const useCart = () => useContext(CartContext);
