@@ -19,7 +19,7 @@ export default function ProductDetails() {
         const res = await fetch(`https://fakestoreapi.com/products/${id}`);
         const data = await res.json();
         setProduct(data);
-      } catch (err) {
+      } catch {
         setError("Failed to load product.");
       } finally {
         setLoading(false);
