@@ -23,7 +23,7 @@ export default function Home() {
         const data = await res.json();
         setProducts(data);
         setLoading(false);
-      } catch (err) {
+      } catch {
         setError("Failed to load products 😢");
         setLoading(false);
       }

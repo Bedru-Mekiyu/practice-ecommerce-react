@@ -1,107 +1,124 @@
 # 🛍️ React E-Commerce Store
 
-A modern, responsive **E-Commerce Web App** built with **React**, **Tailwind CSS**, and **React Router**.  
-It allows users to browse products, view details, add items to a shopping cart, and complete checkout — all with a smooth and dynamic UI.
+A modern, responsive e-commerce web application built with **React 19**, **Tailwind CSS**, **Vite**, and **React Router v7**. The application provides a seamless online shopping experience with product browsing, real-time filtering and sorting, interactive cart drawer, wishlist management, dark mode support, and a checkout flow.
 
 ---
 
 ## ✨ Features
 
-- 🔍 **Product Search & Filtering** — Search products by name, category, and price.
-- 🛒 **Shopping Cart** — Add, remove, and adjust product quantities in real time.
-- 💳 **Checkout Process** — Simple checkout form with validation and progress bar.
-- 📦 **Product Details Page** — View detailed information about each product.
-- 🌐 **API Integration** — Fetched products from [Fake Store API](https://fakestoreapi.com/).
-- 🎨 **Responsive Design** — Fully optimized for desktop, tablet, and mobile.
-- ⚡ **Modern UI/UX** — Built using TailwindCSS and React Hooks.
-- 💾 **Cart Persistence** — Cart state preserved during navigation.
+- 🔍 **Product Search & Filtering** — Instant search by keyword, category filtering, and sorting by price or name.
+- 🛒 **Shopping Cart & Cart Drawer** — Real-time quantity adjustments, price calculation, slide-out drawer, and cart clear functionality.
+- ❤️ **Wishlist Support** — Dedicated wishlist context allowing users to bookmark items across sessions.
+- 💳 **Checkout Flow** — Interactive checkout form with shipping info validation and order summary.
+- 🌗 **Dark Mode Toggle** — System-wide theme switcher with persistence via React Context API.
+- 📦 **Product Details Page** — Detailed view of product specifications and category context.
+- 🌐 **API Integration** — Live product fetching powered by [Fake Store API](https://fakestoreapi.com/).
+- 📱 **Responsive UI/UX** — Clean layout styled with Tailwind CSS, animated with Framer Motion, and enhanced with Lucide Icons and Toast notifications.
+- 💾 **State Persistence** — Cart and theme preferences preserved across navigation using `localStorage`.
 
 ---
 
 ## 🧰 Tech Stack
 
 | Category | Technologies |
-|-----------|---------------|
-| **Frontend** | React, Vite, React Router |
-| **Styling** | Tailwind CSS |
-| **State Management** | React Context API |
-| **API** | FakeStoreAPI |
-| **Build Tool** | Vite |
-| **Icons** | Lucide Icons |
+|---|---|
+| **Frontend Framework** | React 19, React Router v7 |
+| **Build Tool & Server** | Vite 7 |
+| **Styling** | Tailwind CSS 4, PostCSS |
+| **Animation & UI** | Framer Motion, Lucide React, React Toastify |
+| **State Management** | React Context API (`CartContext`, `WishlistContext`, `ThemeContext`) |
+| **Data Source** | FakeStoreAPI |
+| **Linting & Quality** | ESLint 9 |
 
 ---
 
 ## 🚀 Getting Started
 
-Follow these steps to run the project locally:
+### Prerequisites
 
-### 1️⃣ Clone the Repository
+- **Node.js** (v18 or higher recommended)
+- **npm** (v9 or higher)
 
-```bash
-git clone https://github.com/Bedru-Mekiyu/react-ecommerce-store.git
-cd react-ecommerce-store
-2️⃣ Install Dependencies
-bash
-Copy code
-npm install
-3️⃣ Start the Development Server
-bash
-Copy code
-npm run dev
-Your app will be available at http://localhost:5173/
+### Installation
 
-📁 Project Structure
-css
-Copy code
-src/
-├── components/
-│   ├── Navbar.jsx
-│   ├── ProductCard.jsx
-│   ├── Cart.jsx
-│   └── Modal.jsx
-├── context/
-│   └── CartContext.jsx
-├── pages/
-│   ├── Home.jsx
-│   ├── ProductDetails.jsx
-│   ├── CartPage.jsx
-│   └── Checkout.jsx
-├── App.jsx
-├── main.jsx
-└── index.css
-🧠 Code Highlights
-Global Cart Context using React.createContext()
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Bedru-Mekiyu/react-ecommerce-store.git
+   cd react-ecommerce-store
+   ```
 
-Reusable Components for product cards, modals, and forms
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-Dynamic Routing for /, /product/:id, /cart, /checkout
+3. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
+   The application will be accessible at `http://localhost:5173`.
 
-Validation + Smooth Transitions on checkout form
+---
 
-📸 Preview
-Home Page	Product Details	Cart	Checkout
+## 📜 Available Scripts
 
-(You can replace these placeholder links with actual screenshots of your app)
+In the project directory, you can run:
 
-💡 Future Improvements
-🧾 Add user authentication (JWT or Firebase)
+- `npm run dev`: Starts the Vite development server.
+- `npm run build`: Compiles and builds the production bundle into the `dist/` directory.
+- `npm run lint`: Runs ESLint to check for code quality and syntax issues.
+- `npm run preview`: Bootstraps a local web server to preview the production build.
 
-💬 Add product reviews and ratings
+---
 
-🖼️ Add product image zoom or gallery
+## 📁 Project Structure
 
-🕶️ Add dark/light mode
+```text
+react-ecommerce-store/
+├── .github/
+│   └── workflows/
+│       └── ci.yml             # GitHub Actions CI workflow
+├── public/                    # Static public assets
+├── src/
+│   ├── assets/                # Images and SVGs
+│   ├── components/            # Reusable UI components
+│   │   ├── Cart.jsx
+│   │   ├── CartDrawer.jsx
+│   │   ├── Navbar.jsx
+│   │   └── ProductCard.jsx
+│   ├── context/               # React Context Providers
+│   │   ├── CartContext.jsx
+│   │   ├── ThemeContext.jsx
+│   │   └── WishlistContext.jsx
+│   ├── pages/                 # Route pages
+│   │   ├── CartPage.jsx
+│   │   ├── Checkout.jsx
+│   │   ├── Home.jsx
+│   │   ├── ProductDetails.jsx
+│   │   └── Wishlist.jsx
+│   ├── App.css
+│   ├── App.jsx                # Application routes layout
+│   ├── index.css              # Global styles & Tailwind imports
+│   └── main.jsx               # React entry point & context providers
+├── eslint.config.js           # ESLint configuration
+├── index.html                 # HTML template
+├── package.json               # Project dependencies and scripts
+└── vite.config.js             # Vite configuration
+```
 
-📊 Add admin dashboard for managing products
+---
 
-🧑‍💻 Author
-Bedru Mekiyu
-💼GitHub:https://github.com/Bedru-Mekiyu/
-💬 LinkedIn
+## ⚙️ CI/CD
 
-📜 License
-This project is licensed under the MIT License.
-Feel free to use, modify, and distribute this project with attribution.
+Automated integration is configured via **GitHub Actions** (`.github/workflows/ci.yml`). On every push and pull request, the CI pipeline automatically:
 
-⭐ If you like this project, don’t forget to give it a star on GitHub!
-"Code is like humor. When you have to explain it, it’s bad." — Cory House
+1. Sets up the Node.js runtime environment.
+2. Performs a clean dependency installation (`npm ci`).
+3. Executes code quality checks (`npm run lint`).
+4. Builds the application (`npm run build`).
+
+---
+
+## 📜 License
+
+This project is open source and available under the [MIT License](LICENSE).
